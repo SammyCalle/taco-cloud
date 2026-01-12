@@ -11,7 +11,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import sammycalle.taco_cloud.data.repository.OrderRepository;
-import sammycalle.taco_cloud.domain.TacoOrder;
+import sammycalle.taco_cloud.domain.model.TacoOrder;
 
 
 
@@ -41,6 +41,7 @@ public class OrderController {
         }
 
         orderRepository.save(order);
+
         
         log.info("Order submitted: {}",order);
         sessionStatus.setComplete();

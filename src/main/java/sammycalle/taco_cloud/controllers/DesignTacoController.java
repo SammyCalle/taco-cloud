@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import sammycalle.taco_cloud.data.repository.IngredientRepository;
-import sammycalle.taco_cloud.domain.Ingredient;
-import sammycalle.taco_cloud.domain.Ingredient.Type;
-import sammycalle.taco_cloud.domain.Taco;
-import sammycalle.taco_cloud.domain.TacoOrder;
+import sammycalle.taco_cloud.domain.model.Ingredient;
+import sammycalle.taco_cloud.domain.model.Taco;
+import sammycalle.taco_cloud.domain.model.TacoOrder;
+import sammycalle.taco_cloud.domain.model.Ingredient.Type;
 
 
 

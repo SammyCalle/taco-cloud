@@ -1,8 +1,16 @@
 package sammycalle.taco_cloud.data.repository;
 
-import sammycalle.taco_cloud.domain.TacoOrder;
+import java.util.Date;
+import java.util.List;
 
-public interface OrderRepository {
+import org.springframework.data.repository.CrudRepository;
 
-    TacoOrder save(TacoOrder tacoOrder);
+import sammycalle.taco_cloud.domain.model.TacoOrder;
+
+public interface OrderRepository extends CrudRepository<TacoOrder, Long>{
+
+    List<TacoOrder> findByDeliveryZip(String deliveryZip);
+
+    List<TacoOrder> readOrdersByDeliveryZipAndPlacedAtBetween(String deliveryZip, Date startDate, Date endDate);
+    
 }
