@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: taco-cloud
+  cassandra:
+      keyspace-name: tacocloud
+      schema-action: recreate
+      local-datacenter: datacenter1
+      contact-points: 127.0.0.1:9042
