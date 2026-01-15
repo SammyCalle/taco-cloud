@@ -1,5 +1,6 @@
 package sammycalle.taco_cloud.controllers;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,27 +17,34 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import sammycalle.taco_cloud.data.repository.IngredientRepository;
+import sammycalle.taco_cloud.data.repository.TacoRepository;
 import sammycalle.taco_cloud.domain.model.Ingredient;
 import sammycalle.taco_cloud.domain.model.Ingredient.Type;
 import sammycalle.taco_cloud.domain.model.Taco;
 import sammycalle.taco_cloud.domain.model.TacoOrder;
-import sammycalle.taco_cloud.domain.model.TacoUDT;
-
-
-
+import sammycalle.taco_cloud.security.model.User;
+import sammycalle.taco_cloud.security.repository.UserRepository;
 
 @Slf4j
 @Controller
 @RequestMapping("/design")
-@SessionAttributes("tacoOrder")
+@SessionAttributes("order")
 public class DesignTacoController {
 
     private final IngredientRepository ingredientRepository;
 
+    private final TacoRepository tacoRepository;
+
+    private final UserRepository userRepository;
+
     public DesignTacoController(
-        IngredientRepository ingredientRepository) {
+        IngredientRepository ingredientRepository,
+        TacoRepository tacoRepository,
+        UserRepository userRepository) {
         this.ingredientRepository = ingredientRepository;
-    }
+        this.tacoRepository = tacoRepository;
+        this.userRepository = userRepository;
+  }
 
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
@@ -50,7 +58,7 @@ public class DesignTacoController {
         }
     }
 
-    @ModelAttribute(name="tacoOrder")
+    @ModelAttribute(name="order")
     public TacoOrder order(){
         return new TacoOrder();
     }
@@ -58,6 +66,13 @@ public class DesignTacoController {
     @ModelAttribute(name="taco")
     public Taco taco(){
         return new Taco();
+    }
+
+    @ModelAttribute(name = "user")
+    public User user(Principal principal) {
+            String username = principal.getName();
+            User user = userRepository.findByUsername(username);
+            return user;
     }
 
     @GetMapping
@@ -72,14 +87,15 @@ public class DesignTacoController {
         if(errors.hasErrors()){
             return "design";
         }
-            
-        tacoOrder.addTaco(new TacoUDT(taco.getName(), taco.getIngredients()));
+        
+        Taco saved = tacoRepository.save(taco);
+        tacoOrder.addTaco(saved);
 
         return "redirect:/orders/current";
     }
     
 
-    private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
+    private List<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
         return ingredients
               .stream()
               .filter(x -> x.getType().equals(type))

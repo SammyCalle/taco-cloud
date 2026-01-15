@@ -4,12 +4,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 
 import sammycalle.taco_cloud.data.repository.IngredientRepository;
 import sammycalle.taco_cloud.domain.model.Ingredient;
 import sammycalle.taco_cloud.domain.model.Ingredient.Type;
 
 @SpringBootApplication
+@EnableMethodSecurity
 public class TacoCloudApplication {
 
 	public static void main(String[] args) {
@@ -31,4 +33,5 @@ public class TacoCloudApplication {
         repo.save(new Ingredient("SRCR", "Sour Cream", Type.SAUCE));
     };
   }
+
 }
