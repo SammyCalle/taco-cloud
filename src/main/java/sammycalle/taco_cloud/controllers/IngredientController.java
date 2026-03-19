@@ -16,7 +16,7 @@ import sammycalle.taco_cloud.domain.model.Ingredient;
  * @author sammy
  */
 
-@Controller
+@RestController
 public class IngredientController {
 
     private final RestTemplate restTemplate;
