@@ -2,13 +2,12 @@ package sammycalle.taco_cloud.data.repository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
 
 import sammycalle.taco_cloud.domain.model.TacoOrder;
 
-public interface OrderRepository extends CrudRepository<TacoOrder, UUID>{
+public interface OrderRepository extends CrudRepository<TacoOrder, Long>{
 
     List<TacoOrder> findByDeliveryZip(String deliveryZip);
 
